@@ -73,7 +73,11 @@ vim.opt.scrolloff = 10
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
+-- vim.keymap.del('n', "'")
+vim.keymap.set('n', "'", vim.lsp.buf.hover, { desc = '[G]o [H]over' })
 vim.keymap.set('n', 'gh', vim.lsp.buf.hover, { desc = '[G]o [H]over' })
+vim.keymap.set('n', '<leader>e', ':Ex<CR>', { desc = 'Open [E]xplorer' })
+vim.keymap.set('n', '<leader>se', ':Ex<CR>', { desc = 'Open [E]xplorer' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -313,18 +317,25 @@ require('lazy').setup({
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-
+      --
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>e', ':Ex<CR>', { desc = 'Open [E]xplorer' })
-      vim.keymap.set('n', '<leader>se', ':Ex<CR>', { desc = 'Open [E]xplorer' })
+
+      local default_find = 'find_files'
+      local opts = vim.tbl_deep_extend('force', { cwd = '/' }, {})
+      if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. '/.git') then
+        default_find = 'git_files'
+      end
+
+      vim.keymap.set('n', '<leader>f', builtin[default_find], { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>F', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sg', builtin.git_files, { desc = '[S]earch [G]it' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>sG', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>r', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -752,7 +763,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'slate'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -778,7 +789,7 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      -- require('mini.surround').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
