@@ -82,8 +82,9 @@ vim.keymap.set('n', 'gee', vim.diagnostic.open_float, { desc = 'Show Error' })
 vim.keymap.set('n', 'gen', vim.diagnostic.goto_next, { desc = 'Goto next error' })
 vim.keymap.set('n', 'gep', vim.diagnostic.goto_prev, { desc = 'Goto prev error' })
 
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '|', '`')
+vim.keymap.set('n', '\\', '@')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
