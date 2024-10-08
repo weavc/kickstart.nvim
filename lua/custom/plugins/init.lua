@@ -4,4 +4,10 @@
 -- See the kickstart.nvim README for more information
 return {
   { 'justinmk/vim-sneak' },
+  {
+    'akinsho/toggleterm.nvim',
+    opts = {
+      open_mapping = [[<leader>x]],
+    },
+  },
 }
