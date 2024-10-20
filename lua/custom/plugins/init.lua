@@ -8,6 +8,8 @@ return {
     'akinsho/toggleterm.nvim',
     opts = {
       open_mapping = [[<leader>x]],
+      insert_mappings = false,
+      terminal_mappings = false,
     },
   },
 }
