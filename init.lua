@@ -81,10 +81,7 @@ vim.keymap.set('n', '<leader>se', ':Ex<CR>', { desc = 'Open [E]xplorer' })
 vim.keymap.set('n', 'gee', vim.diagnostic.open_float, { desc = 'Show Error' })
 vim.keymap.set('n', 'gen', vim.diagnostic.goto_next, { desc = 'Goto next error' })
 vim.keymap.set('n', 'gep', vim.diagnostic.goto_prev, { desc = 'Goto prev error' })
-
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set('n', '|', '`')
-vim.keymap.set('n', '\\', '@')
+vim.keymap.set('v', '<C-r>', 'y:%s/\\V<c-r>"//gc<left><left><left>')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
